@@ -1,5 +1,8 @@
 package board;
 
+import exceptions.InvalidPositionException;
+import exceptions.InvalidMoveException;
+
 public class Board {
 
         private static final char EMPTY = '-';
@@ -32,7 +35,13 @@ public class Board {
         }
         return false;
         }
-        public void placePiece(Position pos , char symbol){
+        public void placePiece(Position pos , char symbol) throws InvalidMoveException, InvalidPositionException{
+            if(!isValidPosition(pos)){
+                throw new InvalidPositionException("Invalid position" + pos.getRow() + "," + pos);
+            }
+            if(!isEmpty(pos)){
+                throw new InvalidMoveException("position held" + pos.getRow() + "," + pos);
+            }
             grid[pos.getRow()][pos.getColumn()] = symbol;
         }
         public char getPiece(Position pos){
