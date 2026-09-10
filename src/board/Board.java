@@ -38,4 +38,13 @@ public class Board {
         public char getPiece(Position pos){
             return grid[pos.getRow()][pos.getColumn()];
         }
+        public void print(){
+            for (int i = 0; i < rows; i++) {
+                for (int j = 0; j < columns; j++) {
+                    System.out.print(grid[i][j]);
+                }
+                System.out.println();
+            }
+
+        }
 }
