@@ -23,5 +23,19 @@ public class Game {
         this.scanner = new Scanner(System.in);
     }
 
+    private Player getCurrentPlayer() {
+        return players[currentPlayerIndex];
+    }
+
+    private void switchTurn(){
+
+        if (currentPlayerIndex == 0){
+            currentPlayerIndex = 1;
+        }
+        else{
+            currentPlayerIndex = 0;
+        }
+
+    }
 
 }
