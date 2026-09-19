@@ -6,6 +6,7 @@ import java.util.Scanner;
 import player.Player;
 import exceptions.InvalidMoveException;
 import exceptions.InvalidPositionException;
+import java.util.InputMismatchException;
 
 
 public class Game {
@@ -38,14 +39,21 @@ public class Game {
     }
 
     private Position readPosition() {
+        while(true){
+            try{
+                System.out.println("Enter the row: ");
+                int row = scanner.nextInt();
 
-        System.out.println("Enter the row: ");
-        int row = scanner.nextInt();
+                System.out.println("Enter the column: ");
+                int column = scanner.nextInt();
+                
+                return new Position(row -1, column -1);
 
-        System.out.println("Enter the column: ");
-        int column = scanner.nextInt();
-
-        return new Position(row -1 , column -1);
+            } catch(InputMismatchException e){
+                System.out.println("Invalid input! Please enter a number from 1-3.");
+                scanner.nextLine();
+            }    
+        }     
     }
 
     public void play(){
