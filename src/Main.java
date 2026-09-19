@@ -1,5 +1,3 @@
-import board.Board;
-import board.Position;
 import engine.Game;
 import player.Player;
 
