@@ -48,4 +48,23 @@ public class Game {
         return new Position(row -1 , column -1);
     }
 
+    public void play(){
+        while (true){
+            board.print();
+            Player current = getCurrentPlayer();
+            System.out.println("Vez de " + current.getName() + " (" + current.getSymbol() + ")");
+            Position pos = readPosition();
+
+            try {
+                board.placePiece(pos, current.getSymbol());
+            } catch(InvalidPositionException | InvalidMoveException e){
+                System.out.println(e.getMessage());
+                continue;
+            }
+            switchTurn();
+        }
+
+    }
+
+
 }
