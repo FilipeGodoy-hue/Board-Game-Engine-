@@ -57,6 +57,17 @@ public class Game {
 
             try {
                 board.placePiece(pos, current.getSymbol());
+                if (board.checkWinner(current.getSymbol())){
+                    board.print();
+                    System.out.println("The end, " + current.getSymbol() + " is the winner");
+                    return;
+                };
+                if (board.isFull()){
+                    board.print();
+                    System.out.println("The end! Tie, no winners");
+                    return; 
+                }
+
             } catch(InvalidPositionException | InvalidMoveException e){
                 System.out.println(e.getMessage());
                 continue;
