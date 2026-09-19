@@ -52,7 +52,7 @@ public class Game {
         while (true){
             board.print();
             Player current = getCurrentPlayer();
-            System.out.println("Vez de " + current.getName() + " (" + current.getSymbol() + ")");
+            System.out.println("Its " + current.getName() + " (" + current.getSymbol() + " turn)");
             Position pos = readPosition();
 
             try {
