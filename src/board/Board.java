@@ -76,4 +76,16 @@ public class Board {
             }
             return false;
         }
+
+        
+            public boolean isFull(){
+                for(int i =0; i<rows; i++){
+                    for(int j =0; j<columns; j++){
+                        if (grid[i][j] == EMPTY){
+                            return false;
+                        }
+                    }
+                }
+                return true;
+            }
 }
