@@ -10,10 +10,10 @@ import java.util.InputMismatchException;
 
 
 public class Game {
-    Board board;
-    Player[] players;
-    int currentPlayerIndex;
-    Scanner scanner = new Scanner(System.in);
+    private Board board;
+    private Player[] players;
+    private int currentPlayerIndex;
+    private Scanner scanner;
 
     public Game(Player player1, Player player2) {
         this.board = new Board(3, 3);
@@ -46,7 +46,7 @@ public class Game {
 
                 System.out.println("Enter the column: ");
                 int column = scanner.nextInt();
-                
+
                 return new Position(row -1, column -1);
 
             } catch(InputMismatchException e){
