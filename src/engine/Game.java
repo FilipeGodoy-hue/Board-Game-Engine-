@@ -6,13 +6,14 @@ import java.util.Scanner;
 import player.Player;
 import exceptions.InvalidMoveException;
 import exceptions.InvalidPositionException;
+import java.util.InputMismatchException;
 
 
 public class Game {
-    Board board;
-    Player[] players;
-    int currentPlayerIndex;
-    Scanner scanner = new Scanner(System.in);
+    private Board board;
+    private Player[] players;
+    private int currentPlayerIndex;
+    private Scanner scanner;
 
     public Game(Player player1, Player player2) {
         this.board = new Board(3, 3);
@@ -38,14 +39,51 @@ public class Game {
     }
 
     private Position readPosition() {
+        while(true){
+            try{
+                System.out.println("Enter the row: ");
+                int row = scanner.nextInt();
 
-        System.out.println("Enter the row: ");
-        int row = scanner.nextInt();
+                System.out.println("Enter the column: ");
+                int column = scanner.nextInt();
 
-        System.out.println("Enter the column: ");
-        int column = scanner.nextInt();
+                return new Position(row -1, column -1);
 
-        return new Position(row -1 , column -1);
+            } catch(InputMismatchException e){
+                System.out.println("Invalid input! Please enter a number from 1-3.");
+                scanner.nextLine();
+            }    
+        }     
     }
+
+    public void play(){
+        while (true){
+            board.print();
+            Player current = getCurrentPlayer();
+            System.out.println("Its " + current.getName() + " (" + current.getSymbol() + " turn)");
+            Position pos = readPosition();
+
+            try {
+                board.placePiece(pos, current.getSymbol());
+                if (board.checkWinner(current.getSymbol())){
+                    board.print();
+                    System.out.println("The end, " + current.getSymbol() + " is the winner");
+                    return;
+                };
+                if (board.isFull()){
+                    board.print();
+                    System.out.println("The end! Tie, no winners");
+                    return; 
+                }
+
+            } catch(InvalidPositionException | InvalidMoveException e){
+                System.out.println(e.getMessage());
+                continue;
+            }
+            switchTurn();
+        }
+
+    }
+
 
 }

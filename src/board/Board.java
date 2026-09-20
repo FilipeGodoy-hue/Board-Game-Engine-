@@ -37,10 +37,10 @@ public class Board {
         }
         public void placePiece(Position pos , char symbol) throws InvalidMoveException, InvalidPositionException{
             if(!isValidPosition(pos)){
-                throw new InvalidPositionException("Invalid position" + pos.getRow() + "," + pos);
+                throw new InvalidPositionException("Invalid position (" + (pos.getRow() + 1) + "," + (pos.getColumn() + 1) + ") Use row 1-3 and columns 1-3");
             }
             if(!isEmpty(pos)){
-                throw new InvalidMoveException("position held" + pos.getRow() + "," + pos);
+                throw new InvalidMoveException("Position (" + (pos.getRow() + 1) + "," + (pos.getColumn() + 1) + ") is already taken. Choose another one." );
             }
             grid[pos.getRow()][pos.getColumn()] = symbol;
         }
@@ -76,4 +76,16 @@ public class Board {
             }
             return false;
         }
+
+        
+            public boolean isFull(){
+                for(int i =0; i<rows; i++){
+                    for(int j =0; j<columns; j++){
+                        if (grid[i][j] == EMPTY){
+                            return false;
+                        }
+                    }
+                }
+                return true;
+            }
 }
