@@ -4,6 +4,7 @@ import board.Board;
 import board.Position;
 import java.util.Scanner;
 import player.Player;
+import rules.WinCondition;
 import exceptions.InvalidMoveException;
 import exceptions.InvalidPositionException;
 import java.util.InputMismatchException;
@@ -14,14 +15,16 @@ public class Game {
     private Player[] players;
     private int currentPlayerIndex;
     private Scanner scanner;
+    private WinCondition winCondition;
 
-    public Game(Player player1, Player player2) {
+    public Game(Player player1, Player player2, WinCondition winCondition) {
         this.board = new Board(3, 3);
         this.players = new Player[2];
         this.players[0] = player1;
         this.players[1] = player2;
         this.currentPlayerIndex = 0;
         this.scanner = new Scanner(System.in);
+        this.winCondition = winCondition;
     }
 
     private Player getCurrentPlayer() {
@@ -65,7 +68,7 @@ public class Game {
 
             try {
                 board.placePiece(pos, current.getSymbol());
-                if (board.checkWinner(current.getSymbol())){
+                if (winCondition.isMet(board , current.getSymbol())){
                     board.print();
                     System.out.println("The end, " + current.getSymbol() + " is the winner");
                     return;
