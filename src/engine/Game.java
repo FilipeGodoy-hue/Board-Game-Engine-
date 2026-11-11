@@ -17,8 +17,8 @@ public class Game {
     private Scanner scanner;
     private WinCondition winCondition;
 
-    public Game(Player player1, Player player2, WinCondition winCondition) {
-        this.board = new Board(3, 3);
+    public Game(Board board, Player player1, Player player2, WinCondition winCondition) {
+        this.board = board;
         this.players = new Player[2];
         this.players[0] = player1;
         this.players[1] = player2;
