@@ -33,8 +33,15 @@ public class GameLoader {
 
             Board boardObj = new Board(rows, columns ); 
             JSONArray symbols = json.getJSONObject("players").getJSONArray("symbols");
-            Player p1 = new Player("Jogador 1", readSymbol(symbols, 0));
-            Player p2 = new Player("Jogador 2", readSymbol(symbols, 1));
+            char s1 = readSymbol(symbols, 0);
+            char s2 = readSymbol(symbols, 1);
+
+            if (s1==s2) {
+                throw new InvalidConfigurationException("Invalid configuration file: Both of the players cannot have the same character");
+            }
+
+            Player p1 = new Player("Jogador 1", s1);
+            Player p2 = new Player("Jogador 2", s2);
             JSONObject rules = json.getJSONObject("rules");
             String type = rules.getJSONObject("winCondition").getString("type");
 
