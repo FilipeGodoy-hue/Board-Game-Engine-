@@ -6,6 +6,7 @@ import rules.AlligmentWinCondition;
 import rules.WinCondition;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import board.Board;
@@ -19,32 +20,42 @@ public class GameLoader {
 
     public Game load(String filePath) throws IOException, InvalidConfigurationException {
         String text = Files.readString(Path.of(filePath));
-        JSONObject json = new JSONObject(text);
-        String name = json.getString("game");
-        JSONObject board = json.getJSONObject("board");
-        int rows = board.getInt("rows");
-        int columns = board.getInt("columns");
+        try{
+            JSONObject json = new JSONObject(text);
+            String name = json.getString("game");
+            JSONObject board = json.getJSONObject("board");
+            int rows = board.getInt("rows");
+            int columns = board.getInt("columns");
 
-        if (rows <=0 || columns <=0 ) {
-            throw new InvalidConfigurationException("Invalid board: rows and columns must be greater than 0.");
+            if (rows <=0 || columns <=0 ) {
+                throw new InvalidConfigurationException("Invalid board: rows and columns must be greater than 0.");
+            }
+
+            Board boardObj = new Board(rows, columns ); 
+            JSONArray symbols = json.getJSONObject("players").getJSONArray("symbols");
+            Player p1 = new Player("Jogador 1", readSymbol(symbols, 0));
+            Player p2 = new Player("Jogador 2", readSymbol(symbols, 1));
+            JSONObject rules = json.getJSONObject("rules");
+            String type = rules.getJSONObject("winCondition").getString("type");
+
+            WinCondition winCondition;
+            switch (type) {
+            case "ALIGNMENT":
+                winCondition = new AlligmentWinCondition();
+                break;
+            default:
+                throw new InvalidConfigurationException("Unknown win condition type: " + type);
+            }        
+            return new Game(boardObj, p1, p2, winCondition);
+        }catch(JSONException e){
+            throw new InvalidConfigurationException("Invalid configuration file: " + e.getMessage());
         }
-
-        Board boardObj = new Board(rows, columns ); 
-
-        JSONArray symbols = json.getJSONObject("players").getJSONArray("symbols");
-        Player p1 = new Player("Jogador 1", symbols.getString(0).charAt(0));
-        Player p2 = new Player("Jogador 2", symbols.getString(1).charAt(0)); 
-        JSONObject rules = json.getJSONObject("rules");
-        String type = rules.getJSONObject("winCondition").getString("type");
-
-        WinCondition winCondition;
-        switch (type) {
-        case "ALIGNMENT":
-            winCondition = new AlligmentWinCondition();
-            break;
-        default:
-            throw new InvalidConfigurationException("Unknown win condition type: " + type);
-        }        
-        return new Game(boardObj, p1, p2, winCondition);
     }
+        private char readSymbol(JSONArray symbols, int index) throws InvalidConfigurationException {
+                String s = symbols.getString(index);
+                if (s.length() != 1) {
+                    throw new InvalidConfigurationException("Invalid configuration file: All symbols need to have 1 character");
+                }
+                return s.charAt(0);
+        }
 }
