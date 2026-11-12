@@ -10,7 +10,7 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("=== Board Game Engine ===");
-        System.out.println("1) Jogo da Velha");
+        System.out.println("1) Tic-Tac-Toe");
         System.out.println("2) Picaria");
         System.out.print("Choose a Game: ");
 
@@ -19,7 +19,7 @@ public class Main {
         String path;
         switch(choice){
             case "1":
-                path = "games/jogo_da_velha.json";
+                path = "games/tic_tac_toe.json";
                 break;
             case "2":
                 path = "games/picaria.json";
