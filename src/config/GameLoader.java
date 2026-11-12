@@ -3,6 +3,7 @@ package config;
 import exceptions.InvalidConfigurationException;
 import player.Player;
 import rules.AlligmentWinCondition;
+import rules.WinCondition;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -32,7 +33,18 @@ public class GameLoader {
 
         JSONArray symbols = json.getJSONObject("players").getJSONArray("symbols");
         Player p1 = new Player("Jogador 1", symbols.getString(0).charAt(0));
-        Player p2 = new Player("Jogador 2", symbols.getString(1).charAt(0));         
-        return new Game(boardObj, p1, p2, new AlligmentWinCondition());
+        Player p2 = new Player("Jogador 2", symbols.getString(1).charAt(0)); 
+        JSONObject rules = json.getJSONObject("rules");
+        String type = rules.getJSONObject("winCondition").getString("type");
+
+        WinCondition winCondition;
+        switch (type) {
+        case "ALIGNMENT":
+            winCondition = new AlligmentWinCondition();
+            break;
+        default:
+            throw new InvalidConfigurationException("Unknown win condition type: " + type);
+        }        
+        return new Game(boardObj, p1, p2, winCondition);
     }
 }
