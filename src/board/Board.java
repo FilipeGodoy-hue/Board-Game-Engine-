@@ -24,10 +24,9 @@ public class Board {
                     grid[i][j] = EMPTY;
                 }
             }
-            public int getRows() { return rows; }
-            public int getColumns() { return columns; }
-
         }
+    public int getRows() { return rows; }
+    public int getColumns() { return columns; }
         public boolean isValidPosition(Position pos){
         return pos.getRow() >= 0 && pos.getRow() < rows &&pos.getColumn() >= 0 && pos.getColumn() < columns;
         }
