@@ -24,6 +24,8 @@ public class Board {
                     grid[i][j] = EMPTY;
                 }
             }
+            public int getRows() { return rows; }
+            public int getColumns() { return columns; }
 
         }
         public boolean isValidPosition(Position pos){

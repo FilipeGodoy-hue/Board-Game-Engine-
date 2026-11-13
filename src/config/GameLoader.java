@@ -2,7 +2,7 @@ package config;
 
 import exceptions.InvalidConfigurationException;
 import player.Player;
-import rules.AlligmentWinCondition;
+import rules.AlignmentWinCondition;
 import rules.WinCondition;
 
 import org.json.JSONArray;
@@ -48,7 +48,7 @@ public class GameLoader {
             WinCondition winCondition;
             switch (type) {
             case "ALIGNMENT":
-                winCondition = new AlligmentWinCondition();
+                winCondition = new AlignmentWinCondition();
                 break;
             default:
                 throw new InvalidConfigurationException("Unknown win condition type: " + type);
