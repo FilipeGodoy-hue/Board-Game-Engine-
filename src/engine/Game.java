@@ -16,8 +16,10 @@ public class Game {
     private int currentPlayerIndex;
     private Scanner scanner;
     private WinCondition winCondition;
+    private int piecesPerPlayer;
+    private boolean allowsMovement;
 
-    public Game(Board board, Player player1, Player player2, WinCondition winCondition) {
+    public Game(Board board, Player player1, Player player2, WinCondition winCondition , int piecesPerPlayer, boolean allowsMovement) {
         this.board = board;
         this.players = new Player[2];
         this.players[0] = player1;
@@ -25,6 +27,8 @@ public class Game {
         this.currentPlayerIndex = 0;
         this.scanner = new Scanner(System.in);
         this.winCondition = winCondition;
+        this.piecesPerPlayer = piecesPerPlayer;
+        this.allowsMovement = allowsMovement;
     }
 
     private Player getCurrentPlayer() {

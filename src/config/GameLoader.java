@@ -52,8 +52,11 @@ public class GameLoader {
                 break;
             default:
                 throw new InvalidConfigurationException("Unknown win condition type: " + type);
-            }        
-            return new Game(boardObj, p1, p2, winCondition);
+            }
+            int piecesPerPlayer = rules.optInt("piecesPerPlayer", -1);
+            boolean allowsMovement = rules.getBoolean("allowsMovement");
+
+            return new Game(boardObj, p1, p2, winCondition, piecesPerPlayer, allowsMovement);
         }catch(JSONException e){
             throw new InvalidConfigurationException("Invalid configuration file: " + e.getMessage());
         }
