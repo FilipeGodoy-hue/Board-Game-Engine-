@@ -89,6 +89,7 @@ public class Board {
                 }
                 return true;
             }
+
     public int countPieces(char symbol) {
         int count = 0;
         for (int i = 0; i < rows; i++) {
@@ -101,4 +102,27 @@ public class Board {
         }
         return count;
     }
+    public void movePiece(Position from, Position to, char symbol) throws InvalidPositionException, InvalidMoveException {
+        if (!isValidPosition(from) || !isValidPosition(to)) {
+            throw new InvalidPositionException("Invalid position: " + from + " or " + to);
+        }
+        if (getPiece(from) != symbol) {
+            throw new InvalidMoveException("There is no piece of '" + symbol + "' at " + from);
+        }
+        if (!isEmpty(to)) {
+            throw new InvalidMoveException("Position " + to + " is already taken.");
+        }
+
+        int rowDiff = Math.abs(from.getRow() - to.getRow());
+        int colDiff = Math.abs(from.getColumn() - to.getColumn());
+        boolean isAdjacent = rowDiff <= 1 && colDiff <= 1 && !(rowDiff == 0 && colDiff == 0);
+
+        if (!isAdjacent) {
+            throw new InvalidMoveException("Position " + to + " is not adjacent to " + from);
+        }
+
+        grid[from.getRow()][from.getColumn()] = EMPTY;
+        grid[to.getRow()][to.getColumn()] = symbol;
+    }
+
 }
