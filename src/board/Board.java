@@ -89,4 +89,16 @@ public class Board {
                 }
                 return true;
             }
+    public int countPieces(char symbol) {
+        int count = 0;
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                Position pos = new Position(i, j);
+                if (getPiece(pos) == symbol) {
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
 }
