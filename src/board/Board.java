@@ -48,37 +48,21 @@ public class Board {
         public char getPiece(Position pos){
             return grid[pos.getRow()][pos.getColumn()];
         }
-        public void print(){
-            for (int i = 0; i < rows; i++) {
-                for (int j = 0; j < columns; j++) {
-                    System.out.print(grid[i][j]);
-                }
-                System.out.println();
-            }
-
+    public void print(){
+        System.out.print("  ");
+        for (int j = 0; j < columns; j++) {
+            System.out.print((j + 1) + " ");
         }
-        public boolean checkWinner(char symbol){
-            for (int i = 0; i < rows; i++){
-                if(grid[i][0] == symbol && grid[i][1] == symbol && grid[i][2] == symbol){
-                    return true;
-                }
+        System.out.println();
 
+        for (int i = 0; i < rows; i++) {
+            System.out.print((i + 1) + " ");
+            for (int j = 0; j < columns; j++) {
+                System.out.print(grid[i][j] + " ");
             }
-            for (int j = 0; j < columns; j++){
-                if(grid[0][j] == symbol && grid[1][j] == symbol && grid[2][j] == symbol){
-                    return true;
-                }
-            }
-            if(grid[2][0] == symbol && grid[1][1] == symbol && grid[0][2] == symbol){
-                return true;
-            }
-            if(grid[0][0] == symbol && grid[1][1] == symbol && grid[2][2] == symbol){
-                return true;
-            }
-            return false;
+            System.out.println();
         }
-
-        
+    }
             public boolean isFull(){
                 for(int i =0; i<rows; i++){
                     for(int j =0; j<columns; j++){

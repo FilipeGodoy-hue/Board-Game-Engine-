@@ -68,10 +68,19 @@ public class Game {
             board.print();
             Player current = getCurrentPlayer();
             System.out.println("Its " + current.getName() + " (" + current.getSymbol() + " turn)");
-            Position pos = readPosition();
+            boolean inPlacementPhase = !allowsMovement || board.countPieces(current.getSymbol()) < piecesPerPlayer;
 
             try {
-                board.placePiece(pos, current.getSymbol());
+                if (inPlacementPhase) {
+                    Position pos = readPosition();
+                    board.placePiece(pos, current.getSymbol());
+                } else {
+                    System.out.println("Choose the piece to move:");
+                    Position from = readPosition();
+                    System.out.println("Choose where to move it:");
+                    Position to = readPosition();
+                    board.movePiece(from, to, current.getSymbol());
+                }
                 if (winCondition.isMet(board , current.getSymbol())){
                     board.print();
                     System.out.println("The end, " + current.getSymbol() + " is the winner");
