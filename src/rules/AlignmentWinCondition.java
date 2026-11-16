@@ -38,6 +38,28 @@ public class AlignmentWinCondition implements WinCondition {
                 return true;
             }
         }
-        return false; //AINDA FALTAM AS DIAGONAIS! PORTANTO AINDA TEM CÒDIGO PARA SER FEITO AQUI!
+        boolean diagonalPrincipal = true;
+        for (int i = 0; i < board.getRows(); i++) {
+            Position pos = new Position(i, i);
+            if (board.getPiece(pos) != symbol) {
+                diagonalPrincipal = false;
+                break;
+            }
+        }
+        if (diagonalPrincipal) {
+            return true;
+        }
+        boolean diagonalSecundaria = true;
+        for (int i = 0; i < board.getRows(); i++) {
+            Position pos = new Position(i, board.getColumns() - i - 1);
+            if (board.getPiece(pos) != symbol) {
+                diagonalSecundaria = false;
+                break;
+            }
+        }
+        if (diagonalSecundaria) {
+            return true;
+        }
+        return false;
 
     }}

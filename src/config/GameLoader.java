@@ -55,6 +55,12 @@ public class GameLoader {
             }
             int piecesPerPlayer = rules.optInt("piecesPerPlayer", -1);
             boolean allowsMovement = rules.getBoolean("allowsMovement");
+            if (allowsMovement && piecesPerPlayer <=0) {
+                throw new InvalidConfigurationException("Invalid configuration file: piecesPerPlayer must be greater than 0 when movement is allowed");
+            }
+            if (allowsMovement && 2*piecesPerPlayer >= rows * columns) {
+                throw new InvalidConfigurationException("Invalid configuration file: both players' pieces do not fit on the board");
+            }
 
             return new Game(boardObj, p1, p2, winCondition, piecesPerPlayer, allowsMovement);
         }catch(JSONException e){
